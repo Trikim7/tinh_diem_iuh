@@ -17,6 +17,8 @@ function changeSubjectType() {
 function calculateGrade() {
   const subjectType = document.getElementById("subject-type").value
   let finalScore = 0
+  let giuaKy = 0
+  let cuoiKy = 0
 
   if (subjectType === "theory") {
     // Tính điểm cho môn chỉ có lý thuyết
@@ -29,8 +31,8 @@ function calculateGrade() {
     // Tính điểm trung bình thường xuyên (lấy ít nhất 1 cột điểm cao nhất)
     const thuongKy = calculateAverageScore(thuongKyScores)
 
-    const giuaKy = Number.parseFloat(document.getElementById("giua-ky").value) || 0
-    const cuoiKy = Number.parseFloat(document.getElementById("cuoi-ky").value) || 0
+    giuaKy = Number.parseFloat(document.getElementById("giua-ky").value) || 0
+    cuoiKy = Number.parseFloat(document.getElementById("cuoi-ky").value) || 0
 
     finalScore = (thuongKy * 20 + giuaKy * 30 + cuoiKy * 50) / 100
   } else {
@@ -49,10 +51,10 @@ function calculateGrade() {
     // Tính điểm trung bình thường xuyên (lấy ít nhất 1 cột điểm cao nhất)
     const theoryThuongKy = calculateAverageScore(theoryThuongKyScores)
 
-    const theoryGiuaKy = Number.parseFloat(document.getElementById("theory-giua-ky").value) || 0
-    const theoryCuoiKy = Number.parseFloat(document.getElementById("theory-cuoi-ky").value) || 0
+    giuaKy = Number.parseFloat(document.getElementById("theory-giua-ky").value) || 0
+    cuoiKy = Number.parseFloat(document.getElementById("theory-cuoi-ky").value) || 0
 
-    const theoryFinalScore = (theoryThuongKy * 20 + theoryGiuaKy * 30 + theoryCuoiKy * 50) / 100
+    const theoryFinalScore = (theoryThuongKy * 20 + giuaKy * 30 + cuoiKy * 50) / 100
 
     // Tính điểm thực hành
     const practiceScores = []
@@ -72,7 +74,7 @@ function calculateGrade() {
   finalScore = Math.round(finalScore * 10) / 10
 
   // Quy đổi sang thang điểm chữ và thang điểm 4
-  const { letterGrade, scale4, classification, passFail } = convertGrade(finalScore)
+  const { letterGrade, scale4, classification, passFail } = convertGrade(finalScore, giuaKy, cuoiKy)
 
   // Hiển thị kết quả
   document.getElementById("final-score").textContent = finalScore.toFixed(1)
@@ -109,8 +111,17 @@ function calculateAverageScore(scores) {
   return scoresToUse.reduce((sum, score) => sum + score, 0) / scoresToUse.length
 }
 
-function convertGrade(score) {
+function convertGrade(score, giuaKy = -1, cuoiKy = -1) {
   let letterGrade, scale4, classification, passFail
+
+  // Kiểm tra đặc biệt: Nếu điểm giữa kỳ = 0 hoặc điểm cuối kỳ < 3, thì không đạt
+  if (giuaKy === 0 || cuoiKy < 3.0) {
+    letterGrade = "F"
+    scale4 = "0.0"
+    classification = "Kém"
+    passFail = "Không đạt"
+    return { letterGrade, scale4, classification, passFail }
+  }
 
   if (score >= 9.0 && score <= 10) {
     letterGrade = "A+"
