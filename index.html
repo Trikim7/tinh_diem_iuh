@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Công cụ tính điểm học phần IUH</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="images/iuh-logo.png" alt="Logo IUH">
+            </div>
+            <h1>Công cụ tính điểm học phần IUH</h1>
+        </header>
+
+        <div class="calculator-container">
+            <div class="select-container">
+                <label for="subject-type">Chọn loại môn học:</label>
+                <select id="subject-type" onchange="changeSubjectType()">
+                    <option value="theory">Môn chỉ có Lý Thuyết</option>
+                    <option value="theory-practice">Môn có Lý Thuyết + Thực Hành</option>
+                </select>
+            </div>
+
+            <div id="theory-only" class="input-section">
+                <h2>Nhập điểm cho môn chỉ có Lý Thuyết</h2>
+                <div class="input-group">
+                    <label for="thuong-ky">Điểm thường xuyên (20%) - Ít nhất 1 cột:</label>
+                    <div class="score-grid">
+                        <div class="score-item">
+                            <span>Cột 1</span>
+                            <input type="number" id="thuong-ky-1" min="0" max="10" step="0.1" placeholder="Điểm">
+                        </div>
+                        <div class="score-item">
+                            <span>Cột 2</span>
+                            <input type="number" id="thuong-ky-2" min="0" max="10" step="0.1" placeholder="Điểm">
+                        </div>
+                        <div class="score-item">
+                            <span>Cột 3</span>
+                            <input type="number" id="thuong-ky-3" min="0" max="10" step="0.1" placeholder="Điểm">
+                        </div>
+                        <div class="score-item">
+                            <span>Cột 4</span>
+                            <input type="number" id="thuong-ky-4" min="0" max="10" step="0.1" placeholder="Điểm">
+                        </div>
+                        <div class="score-item">
+                            <span>Cột 5</span>
+                            <input type="number" id="thuong-ky-5" min="0" max="10" step="0.1" placeholder="Điểm">
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="giua-ky">Điểm giữa kỳ (30%):</label>
+                    <input type="number" id="giua-ky" min="0" max="10" step="0.1" placeholder="Nhập điểm giữa kỳ">
+                </div>
+                <div class="input-group">
+                    <label for="cuoi-ky">Điểm cuối kỳ (50%):</label>
+                    <input type="number" id="cuoi-ky" min="0" max="10" step="0.1" placeholder="Nhập điểm cuối kỳ">
+                </div>
+            </div>
+
+            <div id="theory-practice" class="input-section" style="display: none;">
+                <h2>Nhập điểm cho môn có Lý Thuyết + Thực Hành</h2>
+                <div class="credit-section">
+                    <div class="input-group">
+                        <label for="theory-credit">Số chỉ lý thuyết (x):</label>
+                        <input type="number" id="theory-credit" min="1" max="10" step="1" value="3">
+                    </div>
+                    <div class="input-group">
+                        <label for="practice-credit">Số chỉ thực hành (y):</label>
+                        <input type="number" id="practice-credit" min="1" max="10" step="1" value="1">
+                    </div>
+                    <div class="input-group">
+                        <label for="total-credit">Tổng số chỉ môn học (z):</label>
+                        <input type="number" id="total-credit" min="1" max="10" step="1" value="4">
+                    </div>
+                </div>
+
+                <div class="theory-section">
+                    <h3>Phần Lý Thuyết</h3>
+                    <div class="input-group">
+                        <label for="theory-thuong-ky">Điểm thường xuyên (20%) - Ít nhất 1 cột:</label>
+                        <div class="score-grid">
+                            <div class="score-item">
+                                <span>Cột 1</span>
+                                <input type="number" id="theory-thuong-ky-1" min="0" max="10" step="0.1" placeholder="Điểm">
+                            </div>
+                            <div class="score-item">
+                                <span>Cột 2</span>
+                                <input type="number" id="theory-thuong-ky-2" min="0" max="10" step="0.1" placeholder="Điểm">
+                            </div>
+                            <div class="score-item">
+                                <span>Cột 3</span>
+                                <input type="number" id="theory-thuong-ky-3" min="0" max="10" step="0.1" placeholder="Điểm">
+                            </div>
+                            <div class="score-item">
+                                <span>Cột 4</span>
+                                <input type="number" id="theory-thuong-ky-4" min="0" max="10" step="0.1" placeholder="Điểm">
+                            </div>
+                            <div class="score-item">
+                                <span>Cột 5</span>
+                                <input type="number" id="theory-thuong-ky-5" min="0" max="10" step="0.1" placeholder="Điểm">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="theory-giua-ky">Điểm giữa kỳ (30%):</label>
+                        <input type="number" id="theory-giua-ky" min="0" max="10" step="0.1" placeholder="Nhập điểm giữa kỳ">
+                    </div>
+                    <div class="input-group">
+                        <label for="theory-cuoi-ky">Điểm cuối kỳ (50%):</label>
+                        <input type="number" id="theory-cuoi-ky" min="0" max="10" step="0.1" placeholder="Nhập điểm cuối kỳ">
+                    </div>
+                </div>
+
+                <div class="practice-section">
+                    <h3>Phần Thực Hành</h3>
+                    <div class="input-group">
+                        <label for="practice-score">Điểm thực hành - Ít nhất 1 cột:</label>
+                        <div class="score-grid">
+                            <div class="score-item">
+                                <span>Cột 1</span>
+                                <input type="number" id="practice-score-1" min="0" max="10" step="0.1" placeholder="Điểm">
+                            </div>
+                            <div class="score-item">
+                                <span>Cột 2</span>
+                                <input type="number" id="practice-score-2" min="0" max="10" step="0.1" placeholder="Điểm">
+                            </div>
+                            <div class="score-item">
+                                <span>Cột 3</span>
+                                <input type="number" id="practice-score-3" min="0" max="10" step="0.1" placeholder="Điểm">
+                            </div>
+                            <div class="score-item">
+                                <span>Cột 4</span>
+                                <input type="number" id="practice-score-4" min="0" max="10" step="0.1" placeholder="Điểm">
+                            </div>
+                            <div class="score-item">
+                                <span>Cột 5</span>
+                                <input type="number" id="practice-score-5" min="0" max="10" step="0.1" placeholder="Điểm">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button id="calculate-btn" onclick="calculateGrade()">Tính điểm</button>
+                <button id="reset-btn" onclick="resetForm()">Xóa trắng</button>
+            </div>
+
+            <div id="result" class="result-section">
+                <h2>Kết quả</h2>
+                <div class="result-item">
+                    <span>Điểm tổng kết:</span>
+                    <span id="final-score">-</span>
+                </div>
+                <div class="result-item">
+                    <span>Thang điểm 4:</span>
+                    <span id="scale-4">-</span>
+                </div>
+                <div class="result-item">
+                    <span>Điểm chữ:</span>
+                    <span id="letter-grade">-</span>
+                </div>
+                <div class="result-item">
+                    <span>Xếp loại:</span>
+                    <span id="classification">-</span>
+                </div>
+                <div class="result-item">
+                    <span>Kết quả:</span>
+                    <span id="pass-fail">-</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="grade-table">
+            <h2>Bảng quy đổi điểm</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Thang điểm 10</th>
+                        <th>Thang điểm chữ</th>
+                        <th>Thang điểm 4</th>
+                        <th>Xếp loại</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>9.0 - 10</td>
+                        <td>A+</td>
+                        <td>4.0</td>
+                        <td>Xuất sắc</td>
+                    </tr>
+                    <tr>
+                        <td>8.5 - 8.9</td>
+                        <td>A</td>
+                        <td>3.7</td>
+                        <td>Giỏi</td>
+                    </tr>
+                    <tr>
+                        <td>8.0 - 8.4</td>
+                        <td>B+</td>
+                        <td>3.5</td>
+                        <td>Khá giỏi</td>
+                    </tr>
+                    <tr>
+                        <td>7.0 - 7.9</td>
+                        <td>B</td>
+                        <td>3.0</td>
+                        <td>Khá</td>
+                    </tr>
+                    <tr>
+                        <td>6.0 - 6.9</td>
+                        <td>C+</td>
+                        <td>2.5</td>
+                        <td>Trung bình khá</td>
+                    </tr>
+                    <tr>
+                        <td>5.5 - 5.9</td>
+                        <td>C</td>
+                        <td>2.0</td>
+                        <td>Trung bình</td>
+                    </tr>
+                    <tr>
+                        <td>5.0 - 5.4</td>
+                        <td>D+</td>
+                        <td>1.5</td>
+                        <td>Trung bình yếu</td>
+                    </tr>
+                    <tr>
+                        <td>4.0 - 4.9</td>
+                        <td>D</td>
+                        <td>1.0</td>
+                        <td>Yếu</td>
+                    </tr>
+                    <tr>
+                        <td>< 4.0</td>
+                        <td>F</td>
+                        <td>0.0</td>
+                        <td>Kém</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="formula-section">
+            <h2>Công thức tính điểm</h2>
+            <div class="formula-item">
+                <h3>1. Môn chỉ có Lý Thuyết:</h3>
+                <div class="formula">
+                    Tổng kết = (Thường kỳ × 20) + (Giữa kỳ × 30) + (Cuối kỳ × 50) / 100
+                </div>
+            </div>
+            <div class="formula-item">
+                <h3>2. Môn có Lý Thuyết + Thực Hành:</h3>
+                <div class="formula">
+                    Tổng kết môn = (Tổng kết lý thuyết × x) + (TBC Thực hành × y) / z
+                </div>
+                <div class="formula-note">
+                    Trong đó:<br>
+                    - x: Số chỉ lý thuyết<br>
+                    - y: Số chỉ thực hành<br>
+                    - z: Số chỉ của môn học
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2024 Công cụ tính điểm học phần IUH - Thực hiện bởi TriKim</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
