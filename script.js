@@ -130,7 +130,7 @@ function convertGrade(score, giuaKy = -1, cuoiKy = -1) {
     passFail = "Đạt"
   } else if (score >= 8.5 && score < 9.0) {
     letterGrade = "A"
-    scale4 = "3.7"
+    scale4 = "3.8"
     classification = "Giỏi"
     passFail = "Đạt"
   } else if (score >= 8.0 && score < 8.5) {
@@ -178,11 +178,11 @@ function resetForm() {
   const inputs = document.querySelectorAll('input[type="number"]')
   inputs.forEach((input) => {
     if (input.id === "theory-credit") {
-      input.value = "3"
+      input.value = "2"
     } else if (input.id === "practice-credit") {
       input.value = "1"
     } else if (input.id === "total-credit") {
-      input.value = "4"
+      input.value = "3"
     } else {
       input.value = ""
     }
